@@ -9,7 +9,7 @@ Recommended product image setup:
 - Keep each product photo square or vertical when possible.
 - Edit `imageFit`, `imagePosition`, and `imagePadding` in `products.js` if a specific shirt needs different placement.
 
-Use matching front/back files when you want the listing to swap images on hover.
+Use matching front/back files when you want the listing to swap images on hover and show Front/Back controls on smaller screens.
 
 Example:
 

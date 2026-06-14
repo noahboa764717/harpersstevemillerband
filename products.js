@@ -13,7 +13,11 @@ window.SHIRT_PRODUCTS = [
         imageFit: "cover",
         imagePosition: "center",
         imagePadding: "0",
-        sizes: ["S", "M", "L", "XL", "2XL"]
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        fit: "Fitted baseball tee. Size up for a looser vintage merch-table feel.",
+        fabric: "Soft cotton-blend black body with white raglan sleeves.",
+        turnaround: "Made to order. Usually ready to ship in 5-10 business days.",
+        care: "Wash cold inside out. Tumble dry low. Do not iron directly over print."
     },
     {
         id: "wings-yellow-red",
@@ -29,7 +33,11 @@ window.SHIRT_PRODUCTS = [
         imageFit: "cover",
         imagePosition: "center",
         imagePadding: "0",
-        sizes: ["S", "M", "L", "XL", "2XL"]
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        fit: "Classic long-sleeve raglan fit with a straight body.",
+        fabric: "Soft mustard body with red raglan sleeves and a vintage-style front print.",
+        turnaround: "Made to order. Usually ready to ship in 5-10 business days.",
+        care: "Wash cold inside out. Tumble dry low. Keep bleach far away."
     },
     {
         id: "rolling-stones-white",
@@ -45,6 +53,10 @@ window.SHIRT_PRODUCTS = [
         imageFit: "cover",
         imagePosition: "center",
         imagePadding: "0",
-        sizes: ["S", "M", "L", "XL", "2XL"]
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        fit: "Easy short-sleeve tee fit. True to size for most buyers.",
+        fabric: "Crisp white cotton-feel tee with a bold front graphic.",
+        turnaround: "Made to order. Usually ready to ship in 5-10 business days.",
+        care: "Wash cold inside out. Tumble dry low to keep the print fresh."
     }
 ];

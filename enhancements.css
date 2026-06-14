@@ -1,0 +1,346 @@
+.brand-mark {
+    object-fit: contain;
+    padding: 4px;
+}
+
+.collection,
+.store-info,
+.about,
+.policies {
+    padding: clamp(70px, 9vw, 112px) 0;
+}
+
+.product-card:focus-within .product-image-front {
+    opacity: 1;
+}
+
+.product-card:focus-within .product-image-back {
+    opacity: 0;
+    transform: scale(1.02);
+}
+
+.product-image.show-back .product-image-front {
+    opacity: 0;
+}
+
+.product-image.show-back .product-image-back {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.image-toggle {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    z-index: 3;
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+    background: var(--color-paper);
+    border: 3px solid var(--color-ink);
+    box-shadow: 4px 4px 0 var(--color-ink);
+}
+
+.image-toggle button {
+    min-width: 58px;
+    padding: 7px 10px;
+    background: transparent;
+    color: var(--color-ink);
+    font-size: 0.74rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.image-toggle button.active {
+    background: var(--color-mustard);
+}
+
+.product-actions {
+    display: grid;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.product-actions .btn-secondary {
+    margin-top: 0;
+}
+
+.store-info {
+    background: var(--color-teal);
+    color: var(--color-paper);
+    border-top: var(--border-heavy);
+    border-bottom: var(--border-heavy);
+}
+
+.store-info .eyebrow,
+.about .eyebrow {
+    color: var(--color-mustard);
+}
+
+.store-info .section-title,
+.about .section-title {
+    color: var(--color-mustard);
+}
+
+.store-info-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 40px;
+    align-items: start;
+}
+
+.store-info .section-subtitle,
+.about-content p {
+    margin-top: 18px;
+    font-size: 1.08rem;
+    font-weight: 700;
+}
+
+.info-panel,
+.info-card,
+.policies article {
+    min-width: 0;
+    background: var(--color-card);
+    border: var(--border-heavy);
+    box-shadow: var(--shadow-heavy);
+    color: var(--color-ink);
+}
+
+.info-panel {
+    padding: clamp(24px, 4vw, 38px);
+}
+
+.table-wrap {
+    max-width: 100%;
+    margin-top: 26px;
+    overflow-x: auto;
+    border: var(--border-heavy);
+    background: #fff;
+}
+
+.size-chart {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+}
+
+.size-chart th,
+.size-chart td {
+    padding: 14px 16px;
+    border: 3px solid var(--color-ink);
+    text-align: left;
+    font-weight: 900;
+}
+
+.size-chart th {
+    background: var(--color-mustard);
+    text-transform: uppercase;
+}
+
+.info-stack {
+    display: grid;
+    gap: 18px;
+}
+
+.info-card {
+    padding: 22px;
+}
+
+.info-number {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--color-red);
+    font-family: var(--font-logo);
+    font-size: 2rem;
+}
+
+.info-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.35rem;
+}
+
+.info-card p,
+.policies p {
+    font-weight: 700;
+}
+
+.social-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.social-proof span {
+    padding: 8px 12px;
+    background: var(--color-paper);
+    border: 3px solid var(--color-ink);
+    color: var(--color-ink);
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 6px;
+}
+
+.policies {
+    background: var(--color-paper);
+}
+
+.policies-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.policies article {
+    padding: 22px;
+}
+
+.policies h2 {
+    margin-bottom: 10px;
+    color: var(--color-red);
+    font-size: 1.55rem;
+    line-height: 1.05;
+}
+
+.product-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2500;
+    display: none;
+    place-items: center;
+    padding: 24px;
+}
+
+.product-modal.open {
+    display: grid;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(34, 29, 26, 0.72);
+}
+
+.modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 940px);
+    max-height: min(760px, calc(100vh - 48px));
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+    overflow-y: auto;
+    background: var(--color-paper);
+    border: var(--border-heavy);
+    box-shadow: 12px 12px 0 var(--color-ink);
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    background: var(--color-red);
+    border: var(--border-heavy);
+    color: #fff;
+    font-weight: 900;
+}
+
+.modal-media {
+    min-height: 440px;
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    background: var(--color-sky);
+    border-right: var(--border-heavy);
+}
+
+.modal-media img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+}
+
+.modal-copy {
+    padding: clamp(28px, 5vw, 46px);
+}
+
+.modal-copy > p:not(.eyebrow) {
+    margin-top: 18px;
+    font-weight: 700;
+}
+
+.details-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.details-list div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 3px solid var(--color-ink);
+}
+
+.details-list dt {
+    color: var(--color-red);
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.details-list dd {
+    font-weight: 700;
+}
+
+@media (max-width: 920px) {
+    .store-info-grid,
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .policies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .image-toggle {
+        display: grid;
+    }
+
+    .modal-card {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-media {
+        min-height: 320px;
+        border-right: 0;
+        border-bottom: var(--border-heavy);
+    }
+}
+
+@media (max-width: 560px) {
+    .info-panel,
+    .info-card,
+    .policies article {
+        box-shadow: 6px 6px 0 var(--color-ink);
+    }
+
+    .policies-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-list div {
+        grid-template-columns: 1fr;
+        gap: 3px;
+    }
+}

@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const products = Array.isArray(window.SHIRT_PRODUCTS) ? window.SHIRT_PRODUCTS : [];
     let cart = JSON.parse(localStorage.getItem("retroCart") || "[]");
+    const validProductIds = new Set(products.map((product) => product.id));
+    cart = cart.filter((item) => validProductIds.has(item.id));
 
     const navToggle = document.querySelector(".nav-toggle");
     const navMenu = document.querySelector(".nav-menu");
@@ -14,6 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartClose = document.querySelector(".cart-close");
     const checkoutBtn = document.getElementById("checkoutBtn");
     const toast = document.getElementById("toast");
+    const productModal = document.getElementById("productModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalTagline = document.getElementById("modalTagline");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalFit = document.getElementById("modalFit");
+    const modalFabric = document.getElementById("modalFabric");
+    const modalTurnaround = document.getElementById("modalTurnaround");
+    const modalCare = document.getElementById("modalCare");
 
     function money(value) {
         return `$${Number(value).toFixed(2)}`;
@@ -41,6 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const backImage = product.backImage
                 ? `<img class="product-image-back" src="${escapeHtml(product.backImage)}" alt="${escapeHtml(product.backAlt || `${product.name} back`)}" loading="lazy">`
                 : "";
+            const toggle = product.backImage
+                ? `<div class="image-toggle" aria-label="Choose product image">
+                        <button class="active" type="button" data-view="front">Front</button>
+                        <button type="button" data-view="back">Back</button>
+                   </div>`
+                : "";
             const style = [
                 product.background ? `--product-bg: ${product.background}` : "",
                 product.imageFit ? `--image-fit: ${product.imageFit}` : "",
@@ -53,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="product-image" style="${style}">
                         <img class="product-image-front" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.alt || product.name)}" loading="lazy">
                         ${backImage}
+                        ${toggle}
                     </div>
                     <div class="product-info">
                         <h3>${escapeHtml(product.name)}</h3>
@@ -64,7 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 ${sizes.map((size) => `<option value="${escapeHtml(size)}">${escapeHtml(size)}</option>`).join("")}
                             </select>
                         </div>
-                        <button class="btn btn-secondary btn-add-cart" type="button" data-product-id="${escapeHtml(product.id)}">Add to Cart</button>
+                        <div class="product-actions">
+                            <button class="btn btn-quiet btn-view-details" type="button" data-product-id="${escapeHtml(product.id)}">View Details</button>
+                            <button class="btn btn-secondary btn-add-cart" type="button" data-product-id="${escapeHtml(product.id)}">Add to Cart</button>
+                        </div>
                     </div>
                 </article>
             `;
@@ -142,6 +163,60 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.remove("cart-open");
     }
 
+    function openProductModal(product) {
+        if (!productModal || !product) return;
+        if (modalImage) {
+            modalImage.src = product.image;
+            modalImage.alt = product.alt || product.name;
+        }
+        if (modalTagline) modalTagline.textContent = product.tagline || "Custom vintage raglan";
+        if (modalTitle) modalTitle.textContent = product.name;
+        if (modalDescription) modalDescription.textContent = product.description || "";
+        if (modalFit) modalFit.textContent = product.fit || "Vintage-inspired fit.";
+        if (modalFabric) modalFabric.textContent = product.fabric || "Soft cotton-feel tee.";
+        if (modalTurnaround) modalTurnaround.textContent = product.turnaround || "Made to order.";
+        if (modalCare) modalCare.textContent = product.care || "Wash cold inside out.";
+        productModal.classList.add("open");
+        productModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("cart-open");
+        productModal.querySelector(".modal-close")?.focus();
+    }
+
+    function closeProductModal() {
+        productModal?.classList.remove("open");
+        productModal?.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("cart-open");
+    }
+
+    function checkoutByEmail() {
+        if (cart.length === 0) {
+            showToast("Your cart is empty.");
+            return;
+        }
+
+        const lines = cart.map((item) => (
+            `${item.quantity} x ${item.name} / Size ${item.size} / ${money(item.price * item.quantity)}`
+        ));
+        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const body = [
+            "Hey Can You Dig It? Retro,",
+            "",
+            "I would like to order:",
+            ...lines.map((line) => `- ${line}`),
+            "",
+            `Estimated subtotal: ${money(total)}`,
+            "",
+            "Name:",
+            "Shipping address:",
+            "Preferred contact:",
+            "",
+            "Please send payment and shipping details."
+        ].join("\n");
+
+        window.location.href = `mailto:hello@canyoudigitretro.com?subject=${encodeURIComponent("Can You Dig It? Retro order")}&body=${encodeURIComponent(body)}`;
+        showToast("Opening your email order.");
+    }
+
     function showToast(message) {
         if (!toast) return;
         toast.textContent = message;
@@ -164,6 +239,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     productsGrid?.addEventListener("click", (event) => {
+        const toggleButton = event.target.closest(".image-toggle button");
+        if (toggleButton) {
+            const imageBox = toggleButton.closest(".product-image");
+            const showBack = toggleButton.dataset.view === "back";
+            imageBox?.classList.toggle("show-back", showBack);
+            imageBox?.querySelectorAll(".image-toggle button").forEach((button) => {
+                button.classList.toggle("active", button === toggleButton);
+            });
+            return;
+        }
+
+        const detailsButton = event.target.closest(".btn-view-details");
+        if (detailsButton) {
+            const product = products.find((item) => item.id === detailsButton.dataset.productId);
+            openProductModal(product);
+            return;
+        }
+
         const button = event.target.closest(".btn-add-cart");
         if (!button) return;
 
@@ -180,12 +273,17 @@ document.addEventListener("DOMContentLoaded", () => {
     cartClose?.addEventListener("click", closeCart);
     cartOverlay?.addEventListener("click", closeCart);
 
-    checkoutBtn?.addEventListener("click", () => {
-        if (cart.length === 0) {
-            showToast("Your cart is empty.");
-            return;
+    checkoutBtn?.addEventListener("click", checkoutByEmail);
+
+    productModal?.querySelectorAll("[data-modal-close]").forEach((button) => {
+        button.addEventListener("click", closeProductModal);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeCart();
+            closeProductModal();
         }
-        showToast("Checkout is ready to connect when your store platform is set.");
     });
 
     updateCartUI();
