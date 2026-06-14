@@ -10,7 +10,7 @@ The supplied brand icon is saved at `assets/brand-logo.jpg` and is used in the h
 
 1. Add your shirt images to `shirt-images/`.
 2. Open `products.js`.
-3. Update each product's `image` filename, name, description, price, sizes, and placement options.
+3. Update each product's `image` and `backImage` filenames, name, description, price, sizes, and placement options.
 
 Image placement options:
 
@@ -20,3 +20,4 @@ Image placement options:
 - `imagePadding: "20px"` adds breathing room around the shirt.
 
 The product cards are generated automatically from `products.js`.
+When a product has a `backImage`, the listing swaps from the front photo to the back photo on hover or keyboard focus.
